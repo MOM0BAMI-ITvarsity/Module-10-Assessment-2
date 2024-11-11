@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Recipe Book</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Font Awesome for icons -->
+    </head>
+			
+    <body class="body-meals" onload="getRecipeList()">
+        <div id="meals">
+            <div class="header">
+                <a href="index.html">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <img src="images/logo-text.png" alt="Logo">
+            </div>
+            
+            <div class="meals-list" id="output">
+                <!-- Recipe list will be dynamically inserted here -->
+            </div>
+        
+        </div>
+        
+        <script>
+            var category = getCategory();
+            
+            // Function to fetch the recipe list based on the category
+            function getRecipeList(){
+                var rootPath = "https://mysite.itvarsity.org/api/recipe-book/";
+                var fullPath = rootPath + "get-recipes/?category=" + category;
+                
+                fetch(fullPath)
+                    .then(function(response){
+                        return response.json();  // Parse JSON response
+                    })
+                    .then(function(data){
+                        var output = "";
+                    
+                        // Loop through each recipe and generate the HTML output
+                        for(var a = 0; a < data.length; a++){
+                            output += `
+                                <a href="show-recipes.html?id=${data[a].id}">
+                                    <div class="meals-list-item">
+                                        <h1>${data[a].title}<i class="fas fa-chevron-circle-right"></i></h1>
+                                        <p>${data[a].description}</p>
+                                    </div>
+                                </a>
+                            `;
+                        }
+
+                        // Insert the generated list into the page
+                        document.getElementById("output").innerHTML = output;
+                    })
+                    .catch(function(error){
+                        console.log("Error fetching recipe list:", error);
+                        document.getElementById("output").innerHTML = "<p>Unable to load recipe list. Please try again later.</p>";
+                    });
+            }
+            
+            // Function to extract the category from the URL
+            function getCategory(){
+                var url = window.location.href;
+                var pos = url.search("=");
+                var category = url.slice(pos + 1);
+                return category;
+            }
+        </script>
+    </body>
+</html>

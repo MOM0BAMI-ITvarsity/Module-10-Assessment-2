@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Recipe Book</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Font Awesome for icons -->
+</head>
+<body class="body-home">
+    <div id="home">
+
+        <div id="logo-container">
+            <img src="images/logo-img.png" id="home-logo-img" alt="Logo Image"/>
+            <img src="images/logo-text.png" id="home-logo-txt" alt="Logo Text"/>
+        </div>
+        
+        <div id="home-menu">
+            <a href="list-recipes.html?category=main" class="home-menu-item">
+                <i class="fas fa-utensils"></i> 
+                <p>Meals</p>
+            </a>
+            
+            <a href="list-recipes.html?category=drink" class="home-menu-item">
+                <i class="fas fa-coffee"></i> 
+                <p>Drinks</p>
+            </a>
+            
+            <a href="list-recipes.html?category=dessert" class="home-menu-item">
+                <i class="fas fa-ice-cream"></i> 
+                <p>Desserts</p>
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

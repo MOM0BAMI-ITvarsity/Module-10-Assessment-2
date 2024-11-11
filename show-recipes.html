@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Recipe Book</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="fontAwesome/css/all.css">
+    </head>
+			
+    <body class="body-recipe" onload="getRecipe()">
+        <div id="meals">
+            <div class="header">
+                <a href="#" id="back-link">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            
+                <img src="images/logo-text.png">
+            </div>
+            
+            <div class="recipe">
+                <div class="recipe-details" id="output">
+                    
+                </div>        
+            </div>
+        </div>
+        <script>
+            var id = getId();
+            
+            function getRecipe(){
+                var rootPath = "https://mysite.itvarsity.org/api/recipe-book/";
+                var fullPath = rootPath + "get-recipes/?id=" + id;
+                    
+                fetch(fullPath)
+                    .then(function(response){
+                        return response.json();
+                })
+                    .then(function(data){
+                        document.getElementById("back-link").href = "list-recipes.html?category=" + data[0].category;
+                        var output = "";
+                        
+                        output +=`
+                            <img src="${rootPath}uploads/${data[0].image}"/>
+                            <h1>${data[0].title}</h1>
+                            <div class="recipe-details-ingredients">
+                                <h2>Ingredients</h2>
+                                <ul>
+                                    ${data[0].ingredients}
+                                </ul>
+                            </div>
+                            <div class="recipe-details-steps">
+                                <h2>Method</h2>
+                                <ol>
+                                    ${data[0].method}
+                                </ol>
+                            </div>
+                        `;
+                    document.getElementById("output").innerHTML = output;
+                })
+            }
+            
+            function getId(){
+                var url = window.location.href;
+                var pos = url.search("=");
+                var id = url.slice(pos + 1);
+                return id;
+            }
+        </script>
+    </body>
+</html>
